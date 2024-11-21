@@ -17,7 +17,20 @@ def get_user_rating(id:str):
     max_rating = max(ratings)
     return (max_rating,current_rating)
 
-def get_user_problems(cf_id: str, time: int=60 * 60 * 24 * 7):
+def get_user_problems(cf_id: str, verify=False):
+    if verify:
+        parsed_data = requests.get(
+            f"https://codeforces.com/api/user.status?handle={cf_id}&count=1").json()
+        results = parsed_data["result"]
+        return results
+    else:
+        parsed_data = requests.get(
+            f"https://codeforces.com/api/user.status?handle={cf_id}").json()
+        results = parsed_data["result"]
+        return results
+
+
+def get_user_problems_by_time(cf_id: str, time: int=60 * 60 * 24 * 7):
     parsed_data = requests.get(
         f"https://codeforces.com/api/user.status?handle={cf_id}").json()
     results = parsed_data["result"]

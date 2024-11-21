@@ -84,14 +84,14 @@ def get_user_record(name: str,time:int=60 * 60 * 24 * 7):
 def get_all_members_records(time: int = 60 * 60 * 24 * 7):
     """
     返回所有成员的 name, cf_id, total_count, average_rating 的列表
-    :param time: 时间范围，默认是最近7天
+    :param time: 时间范围,默认是最近7天
     :return: 一个包含所有成员记录的列表，每个记录是一个字典
     """
     members_records = []
     members = Members.select()
     for member in members:
         cf_id = member.cf_id
-        total_count, average_rating = cf_api.get_user_problems(cf_id, time)
+        total_count, average_rating = cf_api.get_user_problems_by_time(cf_id, time)
         members_records.append([member.name,cf_id,total_count,average_rating])
     return members_records
 
